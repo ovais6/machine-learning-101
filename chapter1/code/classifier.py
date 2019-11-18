@@ -16,7 +16,7 @@ def make_Dictionary(root_dir):
     dictionary = Counter(all_words)
     list_to_remove = dictionary.keys()
 
-    for item in list_to_remove:
+    for item in list(list_to_remove):
         if item.isalpha() == False:
             del dictionary[item]
         elif len(item) == 1:
@@ -54,24 +54,25 @@ def extract_features(mail_dir):
     return features_matrix, train_labels
 
 
-
-TRAIN_DIR = "../train-mails"
-TEST_DIR = "../test-mails"
+TRAIN_DIR = "/content/machine-learning-101/chapter1/test-mails"
+TEST_DIR = "/content/machine-learning-101/chapter1/train-mails"
+#TRAIN_DIR = "../train-mails"
+#TEST_DIR = "../test-mails"
 
 dictionary = make_Dictionary(TRAIN_DIR)
 
-print "reading and processing emails from file."
+print ("reading and processing emails from file.")
 features_matrix, labels = extract_features(TRAIN_DIR)
 test_feature_matrix, test_labels = extract_features(TEST_DIR)
 
 
 model = GaussianNB()
 
-print "Training model."
+print ("Training model.")
 #train model
 model.fit(features_matrix, labels)
 
 predicted_labels = model.predict(test_feature_matrix)
 
-print "FINISHED classifying. accuracy score : "
-print accuracy_score(test_labels, predicted_labels)
+print ("FINISHED classifying. accuracy score : ")
+print (accuracy_score(test_labels, predicted_labels))
